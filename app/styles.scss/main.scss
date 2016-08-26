@@ -1,4 +1,46 @@
-$padding: 20px;
+$wh-icon: 20px;
+$ht-icon: 20px;
+$wh-body: 400px;
+$sc-min: 20px;
+
 body {
-  padding: $padding;
+  padding: 10px $sc-min;
+  width: $wh-body;
+}
+
+img {
+    width: $wh-icon;
+    height: $ht-icon;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+#template {
+    display: none;
+}
+
+.template {
+    margin-top: 5px;
+
+    .name {
+        display: inline-block;
+        font-size: 1.3em;
+        overflow: hidden;
+        width: 90%;
+        max-width: $wh-body - $wh-icon - $sc-min * 2;
+        margin-top: 3px;
+        border-bottom: solid 1px #888888;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
+    button {
+        display: inline-block;
+        width: $wh-icon * 2;
+    }
 }

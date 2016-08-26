@@ -11,7 +11,31 @@
     <!-- endbuild -->
   </head>
   <body>
-    <h1>'Allo, 'Allo!</h1>
+    <script type="text/javascript" src="analytics.js"></script>
+
+    <div>
+        <button id="fetch"><img src="images/fetch.png" /></button>
+        <button id="add"><img src="images/add.png" /></button>
+    </div>
+
+    <div id="list">
+        <div class="template">
+            <a class="name" href="#">バグ修正</a>
+            <button><img src="images/edit.png" /></button>
+        </div>
+        <div class="template">
+            <a class="name" href="#">魔改造</a>
+            <button><img src="images/edit.png" /></button>
+        </div>
+    </div>
+
+
+    <div id="template" class="template">
+        <a class="name" href="#"></a>
+        <button><img src="images/edit.png" /></button>
+    </div>
+
+    <textarea id="area"></textarea>
 
     <!-- build:js scripts/popup-vendor.js -->
     <!-- bower:js -->
