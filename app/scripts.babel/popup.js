@@ -4,13 +4,12 @@
     class Popup {
         constructor() {
             window.addEventListener('load', (evt) => {
-                console.log('load');
                 this.start();
             });
         }
         start() {
             this.assignEventHandlers();
-            console.log('start');
+            this.paint();
         }
         assignEventHandlers() {
             document.getElementById('fetch').addEventListener('click', (evt) => {
@@ -27,18 +26,17 @@
                     chrome.runtime.getBackgroundPage((backgroundPage) => {
                         let bg = backgroundPage.bg;
                         bg.saveTemplate(datas.title, datas.title, datas.body);
-                        this.reload();
+                        this.repaint();
                     });
                 } else {
                     document.getElementById('area').value = 'not found';
                 }
             });
         }
-        reload() {
+        paint() {
             chrome.runtime.getBackgroundPage((backgroundPage) => {
                 let bg = backgroundPage.bg;
                 bg.getAllTemplates((items) => {
-                    console.log(items);
                     items.forEach((template, idx, items) => {
                         console.log(template);
                         var divList = document.getElementById('list');
@@ -53,6 +51,10 @@
                     });
                 });
             });
+        }
+        repaint() {
+            document.getElementById('list').innerHTML = '';
+            this.paint();
         }
     }
 
