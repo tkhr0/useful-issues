@@ -29,7 +29,9 @@
                 title: title,
                 body: body
             };
-            chrome.storage.local.set({template: [data]}, () => {
+            this.getAllTemplates((templates) => {
+                templates.push(data);
+                chrome.storage.local.set({template: templates});
             });
         }
         _getNextId() {
