@@ -8,18 +8,23 @@
         }
         assignEventHandlers() {
         }
-        getTemplateById(template_id) {
-            chrome.storage.local.get(template_id, (items) => {
-                if (items.hasOwnProperty(template_id)) {
-                    callback(items[template_id]);
-                } else {
-                    callback({});
-                }
+        getTemplateById(templateId, callback) {
+            chrome.storage.local.get('template', (item) => {
+                var templates = item.template;
+                templates.forEach((template, callback) => {
+                    if (template.hasOwnProperty(templateId)) {
+                        callback(templates[templateId]);
+                    }
+                });
             });
         }
         getAllTemplates(callback) {
             chrome.storage.local.get('template', (items) => {
-                callback(items.template);
+                if ("template" in items) {
+                    callback(items.template);
+                } else {
+                    callback([]);
+                }
             });
         }
         saveTemplate(name, title, body) {

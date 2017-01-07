@@ -22,39 +22,56 @@
             }, (results) => {
                 if (results) {
                     var datas = results[0];
-                    document.getElementById('area').value = datas.title;
                     chrome.runtime.getBackgroundPage((backgroundPage) => {
                         let bg = backgroundPage.bg;
                         bg.saveTemplate(datas.title, datas.title, datas.body);
                         this.repaint();
                     });
-                } else {
-                    document.getElementById('area').value = 'not found';
                 }
+            });
+        }
+        onClickTitleLink(evt) {
+            var divTemplate = this.parentElement;
+            var templateId = divTemplate.getAttribute('data-id');
+
+            chrome.runtime.getBackgroundPage((backgroundPage) => {
+                let bg = backgroundPage.bg;
+                bg.getTemplateById(templateId, (template) => {
+                    let issue = backgroundPage.issue;
+                    issue.setDatas(template.title, template.body);
+                });
             });
         }
         paint() {
             chrome.runtime.getBackgroundPage((backgroundPage) => {
                 let bg = backgroundPage.bg;
-                bg.getAllTemplates((items) => {
-                    items.forEach((template, idx, items) => {
-                        console.log(template);
-                        var divList = document.getElementById('list');
-                        var divTemplate = document.getElementById('template').cloneNode(true);
+                bg.getAllTemplates((templates) => {
+                    var divList = document.getElementById('list');
+                    var divTemplate;
+                    for (var i=0; i<templates.length; i++){
+                        divTemplate = document.getElementById('template').cloneNode(true);
 
-                        divTemplate.getElementsByClassName('name')[0].text = template.name;
+                        divTemplate.getElementsByClassName('name')[0].text = templates[i].name;
                         divTemplate.id = '';
+                        divTemplate.setAttribute('data-id', templates[i].id);
 
-                        console.log(divTemplate);
                         divList.appendChild(divTemplate);
 
-                    });
+                    }
+                    this.bindApply();
                 });
             });
         }
         repaint() {
             document.getElementById('list').innerHTML = '';
             this.paint();
+        }
+        bindApply() {
+            Array.prototype.forEach.call(document.getElementsByClassName('name'), (element) => {
+                element.addEventListener('click', (evt) => {
+                    this.onClickTitleLink.call(element, evt);
+                });
+            });
         }
     }
 
