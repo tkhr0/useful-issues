@@ -21,7 +21,27 @@
      * イベントをバインド
      */
     assignEventHandlers() {
+      document.getElementById('delete').addEventListener('click', () => {
+        this.onClickDeleteBtn();
+      });
 
+    }
+
+    /*
+     * 削除ボタンの挙動
+     */
+    onClickDeleteBtn() {
+      var self = this;
+      var templateId = document.getElementById('preview').getAttribute('data-id');
+      chrome.runtime.getBackgroundPage((backgroundPage) => {
+        let bg = backgroundPage.bg;
+        bg.deleteTemplate(templateId, (isDeleted) => {
+          if (isDeleted) {
+            self.clear();
+            self.paint();
+          }
+        });
+      });
     }
 
     /*
@@ -30,6 +50,7 @@
     paintPreview(template) {
       document.getElementById('title').value = template.title;
       document.getElementById('body').value = template.body;
+      document.getElementById('preview').setAttribute('data-id', template.id);
     }
 
     /*
@@ -80,7 +101,16 @@
           this.paintPreview(template);
         });
       });
+    }
 
+    /*
+     * 描画を初期状態に
+     */
+    clear() {
+      document.querySelector('#list ul').innerHTML = '';
+      document.getElementById('preview').setAttribute('data-id', '');
+      document.getElementById('title').value = '';
+      document.getElementById('body').value = '';
     }
 
   }

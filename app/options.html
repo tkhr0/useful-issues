@@ -30,9 +30,7 @@
 
         <div class="col-md-9">
           <h2>プレビュー</h2>
-          <div id="tool">
-          </div>
-          <div id="preview">
+          <div id="preview" data-id="">
             <div class="topic-header">
               <input id="title" class="form-control input-contrast" type="text">
             </div>
@@ -40,6 +38,13 @@
               <textarea id="body" class="form-control input-contrast"></textarea>
             </div>
           </div>
+
+          <div id="tool">
+            <button id="delete" type="button" class="btn btn-danger">
+              <i class="fa fa-trash-o fa-lg" aria-hidden="true"></i> 削除
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -57,6 +62,8 @@
     <!-- endbuild -->
 
     <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
     <!-- endbower -->
     <!-- build:js scripts/options.js -->
     <script src="scripts/options.js"></script>

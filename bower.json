@@ -3,7 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "dependencies": {
-    "bootstrap-sass": "^3.3.7"
+    "bootstrap-sass": "^3.3.7",
+    "font-awesome": "^4.7.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

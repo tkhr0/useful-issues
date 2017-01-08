@@ -56,7 +56,11 @@ gulp.task('styles', () => {
     .pipe($.sass.sync({
       outputStyle: 'expanded',
       precision: 10,
-      includePaths: ['.', 'app/bower_components/bootstrap-sass/assets/stylesheets/']
+      includePaths: [
+        '.',
+        'app/bower_components/bootstrap-sass/assets/stylesheets/',
+        'app/bower_components/font-awesome/scss/',
+      ]
     }).on('error', $.sass.logError))
     .pipe(gulp.dest('app/styles'));
 });
