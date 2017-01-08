@@ -24,6 +24,10 @@
             document.getElementById('fetch').addEventListener('click', (evt) => {
                 this.onClickFetchBtn(evt);
             });
+
+            document.getElementById('option').addEventListener('click', (evt) => {
+              chrome.tabs.create({'url': "/options.html" } )
+            });
         }
 
         /*
