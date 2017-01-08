@@ -78,7 +78,7 @@
          * titleをクリックした時の動き
          */
         onClickTitleLink(evt) {
-            var divTemplate = this.parentElement;
+            var divTemplate = this;
             var templateId = divTemplate.getAttribute('data-id');
 
             chrome.tabs.query({  // popupを出しているタブを取得する
@@ -110,22 +110,26 @@
          * popupを描画する
          */
         paint() {
+          var self = this;
             chrome.runtime.getBackgroundPage((backgroundPage) => {
                 let bg = backgroundPage.bg;
                 bg.getAllTemplates((templates) => {
                     var divList = document.getElementById('list');
                     var divTemplate;
-                    for (var i=0; i<templates.length; i++){
-                        divTemplate = document.getElementById('template').cloneNode(true);
+                      Object.keys(templates).forEach(function (key) {
+                        var template = templates[key];
 
-                        divTemplate.getElementsByClassName('name')[0].innerHTML = templates[i].name;
+                        divTemplate = document.getElementById('template').cloneNode(true);
+                        divTemplate.getElementsByClassName('name')[0].innerHTML = template.name;
                         divTemplate.id = '';
-                        divTemplate.setAttribute('data-id', templates[i].id);
+                        divTemplate.setAttribute('data-id', template.id);
+                        divTemplate.addEventListener('click', function (evt) {
+                          self.onClickTitleLink.call(this, evt);
+                        });
 
                         divList.appendChild(divTemplate);
+                      });
 
-                    }
-                    this.bindApply();
                 });
             });
         }

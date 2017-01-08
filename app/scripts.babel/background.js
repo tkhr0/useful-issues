@@ -32,7 +32,7 @@
                 if ("template" in items) {
                     callback(items.template);
                 } else {
-                    callback([]);
+                    callback({});
                 }
             });
         }
@@ -41,14 +41,15 @@
          * テンプレートを保存する
          */
         saveTemplate(name, title, body) {
+            var id = this._getNextId();
             var data = {
-                id: this._getNextId(),
+                id: id,
                 name: name,
                 title: title,
                 body: body
             };
             this.getAllTemplates((templates) => {
-                templates.push(data);
+                templates[id] = data;
                 chrome.storage.local.set({template: templates});
             });
         }
@@ -59,7 +60,7 @@
         _initTemplateId() {
             self = this;
             this.getAllTemplates((templates) => {
-                templates.forEach((val, idx, arr) => {
+              Object.keys(templates).forEach((val, idx, arr) => {
                     if (val.id > self.nextDataId) {
                         self.nextDataId = val.id + 1;
                     }

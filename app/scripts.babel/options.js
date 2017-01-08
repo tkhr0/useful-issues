@@ -45,8 +45,8 @@
           let elemTemplate = document.getElementById('template-list');
 
           // 羅列する
-          for (let i=0; i<templates.length; i++) {
-            var template = templates[i];
+          Object.keys(templates).forEach((key, idx, arr) => {
+            var template = templates[key];
             var elemTemplateLink = elemTemplate.content.querySelector('a');
 
             elemTemplateLink.setAttribute('data-id', template.id);
@@ -64,7 +64,7 @@
               self.paintPreviewByTemplateId(templateId);
               return false;
             });
-          }
+          });
 
         });
       });
