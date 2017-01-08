@@ -59,8 +59,9 @@
             // templates.contentにイベントのバインドはできないため、
             // appendChildしたElementを再取得してaddEventListenerする
             var elemLink = elemList.lastElementChild.querySelector('a');
-            elemLink.addEventListener('click', (evt) => {
-              self.paintPreview(template);
+            elemLink.addEventListener('click', function (evt) {
+              var templateId = this.getAttribute('data-id');
+              self.paintPreviewByTemplateId(templateId);
               return false;
             });
           }
@@ -72,12 +73,11 @@
     /*
      * リストの選択を反映する
      */
-    selectTemplateById(templateId) {
-      var self = this;
+    paintPreviewByTemplateId(templateId) {
       chrome.runtime.getBackgroundPage((backgroundPage) => {
         let bg = backgroundPage.bg;
         bg.getTemplateById(templateId, (template) => {
-          self.preview(template);
+          this.paintPreview(template);
         });
       });
 
