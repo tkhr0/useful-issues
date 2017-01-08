@@ -6,6 +6,7 @@ $sc-min: 20px;
 body {
   padding: 10px $sc-min;
   width: $wh-body;
+  box-sizing: content-box;
 }
 
 .icon {
@@ -20,6 +21,37 @@ body {
 #config {
   position: absolute;
   right: 0;
+}
+
+#message-panel {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: none;
+  background-color: white;
+  border: solid 1px gray;
+  border-radius: 3px;
+  transition: all .5s;
+  opacity: 1;
+
+  &.fadeout {
+    opacity: 0;
+  }
+}
+
+#message {
+  margin: 0;
+  padding: 3px 5px;
+  text-align: center;
+
+  &.info {
+    background-color: #d9edf7;
+  }
+
+  &.error {
+    background-color: #f2dede;
+  }
 }
 
 #template {

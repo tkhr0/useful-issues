@@ -27,19 +27,49 @@
         }
 
         /*
+         * メッセージを表示する
+         */
+        showMessage(text, type) {
+          if (!type) {
+            type = 'info';
+          }
+
+          // メッセージを設定
+          var elemMessage = document.getElementById('message');
+          elemMessage.innerHTML = text;
+          elemMessage.className = type;
+
+          // メッセージを表示＆非表示
+          var elemMessagePanel = document.getElementById('message-panel');
+          elemMessagePanel.style.display = 'block';
+          setTimeout(() => {
+            elemMessagePanel.className += ' fadeout';
+            setTimeout(() => {
+              elemMessagePanel.style.display = 'none';
+              elemMessagePanel.className = '';
+            }, 500);
+          }, 3000);
+        }
+
+        /*
          * fetchボタンを押した時の動き
          */
         onClickFetchBtn(evt) {
             chrome.tabs.executeScript(null, {
                 file: 'scripts/fetch.js'
             }, (results) => {
-                if (results) {
+                if (results && results.title != '') {
                     var datas = results[0];
                     chrome.runtime.getBackgroundPage((backgroundPage) => {
                         let bg = backgroundPage.bg;
                         bg.saveTemplate(datas.title, datas.title, datas.body);
+                        this.showMessage('テンプレートとして保存しました');
                         this.repaint();
                     });
+                }else if (results && results.title == '') {
+                  this.showMessage('タイトルを設定してください', 'error');
+                } else {
+                  this.showMessage('保存に失敗しました', 'error');
                 }
             });
         }
