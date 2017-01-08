@@ -7,6 +7,10 @@ body {
   color: #333;
 }
 
+#list li {
+  list-style: none;
+}
+
 .form-control {
   min-height: 34px;
   padding: 6px 8px;
