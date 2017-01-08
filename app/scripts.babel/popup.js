@@ -88,7 +88,7 @@
                     for (var i=0; i<templates.length; i++){
                         divTemplate = document.getElementById('template').cloneNode(true);
 
-                        divTemplate.getElementsByClassName('name')[0].text = templates[i].name;
+                        divTemplate.getElementsByClassName('name')[0].innerHTML = templates[i].name;
                         divTemplate.id = '';
                         divTemplate.setAttribute('data-id', templates[i].id);
 

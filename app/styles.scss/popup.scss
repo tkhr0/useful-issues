@@ -8,13 +8,18 @@ body {
   width: $wh-body;
 }
 
-img {
+.icon {
     width: $wh-icon;
     height: $ht-icon;
 }
 
-.inline-block {
-    display: inline-block;
+#tool {
+  position: relative;
+}
+
+#config {
+  position: absolute;
+  right: 0;
 }
 
 #template {
@@ -23,20 +28,13 @@ img {
 
 .template {
     margin-top: 5px;
+    width: 100%;
 
     .name {
-        display: inline-block;
         font-size: 1.3em;
         overflow: hidden;
-        width: 90%;
-        max-width: $wh-body - $wh-icon - $sc-min * 2;
         margin-top: 3px;
-        border-bottom: solid 1px #888888;
-        text-decoration: none;
-
-        &:hover {
-            text-decoration: none;
-        }
+        width: 100%;
     }
 
     button {

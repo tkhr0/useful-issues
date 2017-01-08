@@ -6,16 +6,20 @@
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
-    <!-- build:css styles/main.css -->
-    <link href="styles/main.css" rel="stylesheet">
+    <!-- build:css styles/popup.css -->
+    <link href="styles/popup.css" rel="stylesheet">
     <!-- endbuild -->
   </head>
   <body>
     <script type="text/javascript" src="analytics.js"></script>
 
-    <div>
-        <button id="fetch"><img src="images/fetch.png" /></button>
-        <button id="add"><img src="images/add.png" /></button>
+    <div id="tool">
+      <button id="fetch">
+        <img class="icon" src="images/fetch.png" />
+      </button>
+      <button id="config">
+        <img class="icon" src="images/edit.png" />
+      </button>
     </div>
 
     <div id="list">
@@ -23,8 +27,7 @@
 
 
     <div id="template" class="template" data-id="">
-        <a class="name" href="#"></a>
-        <button><img src="images/edit.png" /></button>
+      <button class="name"></button>
     </div>
 
     <!-- build:js scripts/popup-vendor.js -->
