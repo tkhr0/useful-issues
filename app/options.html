@@ -1,22 +1,54 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="utf-8">
     <!-- build:css styles/options-vendor.css -->
     <!-- bower:css -->
     <!-- endbower -->
     <!-- endbuild -->
-    <!-- build:css styles/main.css -->
-    <link href="styles/main.css" rel="stylesheet">
+    <!-- build:css styles/options.css -->
+    <link href="styles/options.css" rel="stylesheet">
     <!-- endbuild -->
   </head>
+
   <body>
-    <h1>'Allo, 'Allo!</h1>
+    <header>
+      <h1>issue templates</h1>
+    </header>
+
+    <div class="container">
+      <div class="row">
+
+        <div id="list" class="col-md-4">
+          <ul>
+          </ul>
+        </div>
+
+        <div class="col-md-8">
+          <div id="tool">
+          </div>
+          <div id="preview">
+            <input id="title" type="text">
+            <textarea id="body"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+    </footer>
+
+    <template id="template-list">
+      <li>
+        <a class="template-title" href="#" data-id=""></a>
+      </li>
+    </template>
 
     <!-- build:js scripts/options-vendor.js -->
-    <!-- bower:js -->
-    <!-- endbower -->
     <!-- endbuild -->
 
+    <!-- bower:js -->
+    <!-- endbower -->
     <!-- build:js scripts/options.js -->
     <script src="scripts/options.js"></script>
     <!-- endbuild -->
