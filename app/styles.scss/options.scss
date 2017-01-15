@@ -9,6 +9,23 @@ body {
   color: #333;
 }
 
+header {
+  display: block;
+  padding-left: 100px;
+  color: $color-theme;
+  background-color: beige;
+}
+
+h1 {
+  margin: 0;
+  padding-top: 5px;
+  padding-bottom: 3px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
 #list li {
   list-style: none;
 }
