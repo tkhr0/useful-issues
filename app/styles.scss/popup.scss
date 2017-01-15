@@ -1,3 +1,4 @@
+@import "font-awesome";
 @import "color";
 
 $wh-icon: 20px;
@@ -14,6 +15,15 @@ body {
 .icon {
     width: $wh-icon;
     height: $ht-icon;
+}
+
+.btn {
+  border-radius: 5px;
+  background-color: whitesmoke;
+  color: $color-theme;
+  &>* {
+    display: block;
+  }
 }
 
 #tool {
@@ -65,10 +75,12 @@ body {
     width: 100%;
 
     .name {
+        display: inline;
         font-size: 1.3em;
         overflow: hidden;
         margin-top: 3px;
-        width: 100%;
+        line-height: 1.9;
+        vertical-align: text-top;
     }
 
     button {
