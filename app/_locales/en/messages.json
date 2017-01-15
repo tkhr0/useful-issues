@@ -1,10 +1,10 @@
 {
   "appName": {
-    "message": "issue templates",
-    "description": "The name of the application"
+    "message": "useful issues",
+    "description": "It is an extension that can save and apply Github's issue template."
   },
   "appDescription": {
-    "message": "My Chrome Extension",
-    "description": "The description of the application"
+    "message": "Make the issue useful in the template.",
+    "description": "It is an extension that can save and apply Github's issue template."
   }
 }
