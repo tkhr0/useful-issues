@@ -13,8 +13,8 @@ body {
 }
 
 .icon {
-    width: $wh-icon;
-    height: $ht-icon;
+  width: $wh-icon;
+  height: $ht-icon;
 }
 
 .btn {
@@ -67,24 +67,24 @@ body {
 }
 
 #template {
-    display: none;
+  display: none;
 }
 
 .template {
-    margin-top: 5px;
-    width: 100%;
+  margin-top: 5px;
+  width: 100%;
 
-    .name {
-        display: inline;
-        font-size: 1.3em;
-        overflow: hidden;
-        margin-top: 3px;
-        line-height: 1.9;
-        vertical-align: text-top;
-    }
+  .name {
+    display: inline;
+    font-size: 1.3em;
+    overflow: hidden;
+    margin-top: 3px;
+    line-height: 1.9;
+    vertical-align: text-top;
+  }
 
-    button {
-        display: inline-block;
-        width: $wh-icon * 2;
-    }
+  button {
+    display: inline-block;
+    width: $wh-icon * 2;
+  }
 }

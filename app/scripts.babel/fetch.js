@@ -12,8 +12,8 @@
 var title = document.getElementById('issue_title').value;
 var body = document.getElementById('issue_body').value;
 var data = {
-    "title": title,
-    "body": body
+  "title": title,
+  "body": body
 };
 
 data;
