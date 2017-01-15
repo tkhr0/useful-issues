@@ -24,7 +24,6 @@
       document.getElementById('delete').addEventListener('click', () => {
         this.onClickDeleteBtn();
       });
-
     }
 
     /*
@@ -32,6 +31,11 @@
      */
     onClickDeleteBtn() {
       var self = this;
+
+      if (!window.confirm('delete this template?')) {
+        return;
+      }
+
       var templateId = document.getElementById('preview').getAttribute('data-id');
       chrome.runtime.getBackgroundPage((backgroundPage) => {
         let bg = backgroundPage.bg;
