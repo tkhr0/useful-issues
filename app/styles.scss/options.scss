@@ -2,6 +2,12 @@
 @import "font-awesome";
 @import "color";
 
+@mixin buns {
+  display: block;
+  color: $color-theme;
+  background-color: beige;
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 14px;
@@ -10,10 +16,12 @@ body {
 }
 
 header {
-  display: block;
+  @include buns;
   padding-left: 100px;
-  color: $color-theme;
-  background-color: beige;
+}
+
+footer {
+  @include buns;
 }
 
 h1 {
