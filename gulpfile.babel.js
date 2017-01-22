@@ -12,6 +12,7 @@ gulp.task('extras', () => {
     'app/*.*',
     'app/_locales/**',
     '!app/scripts.babel',
+    'app/bower_components/font-awesome/fonts/*',
     '!app/*.json',
     '!app/*.html',
     '!app/styles.scss'
