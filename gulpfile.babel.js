@@ -11,8 +11,9 @@ gulp.task('extras', () => {
   return gulp.src([
     'app/*.*',
     'app/_locales/**',
-    '!app/scripts.babel',
+    'app/scripts/*',
     'app/bower_components/font-awesome/fonts/*',
+    '!app/scripts.babel',
     '!app/*.json',
     '!app/*.html',
     '!app/styles.scss'
@@ -136,7 +137,7 @@ gulp.task('wiredep', () => {
 gulp.task('package', function () {
   var manifest = require('./dist/manifest.json');
   return gulp.src('dist/**')
-      .pipe($.zip('issue templates-' + manifest.version + '.zip'))
+      .pipe($.zip('useful-issues-' + manifest.version + '.zip'))
       .pipe(gulp.dest('package'));
 });
 

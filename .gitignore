@@ -8,3 +8,6 @@ test/bower_components
 package
 app/scripts
 app/styles
+*.crx
+*.zip
+*.pem
