@@ -11,3 +11,4 @@ app/styles
 *.crx
 *.zip
 *.pem
+.env

@@ -4,8 +4,10 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
 import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
+import dotenv from 'dotenv';
 
 const $ = gulpLoadPlugins();
+dotenv.config();
 
 gulp.task('extras', () => {
   return gulp.src([
@@ -98,6 +100,7 @@ gulp.task('chromeManifest', () => {
 
 gulp.task('babel', () => {
   return gulp.src('app/scripts.babel/**/*.js')
+      .pipe($.replace('ANALYTICS_CODE', process.env.ANALYTICS_CODE))
       .pipe($.babel({
         presets: ['es2015']
       }))
