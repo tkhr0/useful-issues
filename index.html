@@ -1,10 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
     <head>
         <meta charset="UTF-8">
         <title>useful issues</title>
+
+        <link rel="stylesheet" href="assets/css/index.css">
     </head>
 
     <body>
+        <div><img src="" alt="how to use useful issues"></div>
+
+        <header>
+            <div>
+                <h1>useful issues</h1>
+                <span><img src="assets/image/icon-128.png" alt="useful issues"></span>
+            </div>
+            <p>
+                <span>
+                    <a href="https://github.com/tkhr0/useful-issues/tree/master">
+                        <img src="https://img.shields.io/github/forks/tkhr0/useful-issues.svg?style=social&label=Fork" alt="github stars">
+                    </a>
+                </span>
+                <span>
+                    <a href="https://chrome.google.com/webstore/detail/useful-issues/ndjffnpnjoipcpbpfkgengipennjbblh">
+                        <img src="https://img.shields.io/chrome-web-store/d/ndjffnpnjoipcpbpfkgengipennjbblh.svg" alt="github stars">
+                    </a>
+                </span>
+            </p>
+        </header>
+
+        <section>
+            <h2>concept</h2>
+            <p>
+                <span class="non-br">コラボレーションにおいてテキストのコミュニケーションは難しいです</span><br>
+                <span class="non-br">useful issuesで貴重なissueを100%活かしましょう</span>
+            </p>
+        </section>
+
+        <section>
+            <h2>I do</h2>
+            <p>
+                <span class="non-br">issueのテンプレートを用意することで</span><br>
+                <span class="non-br">十分な情報共有を担保できます</span>
+            </p>
+        </section>
+
+        <section>
+            <h2>useage</h2>
+
+            <div>
+                <button id="tab-collaborators" class="-success -prefix">
+                    <span class="prefix">for</span>Collaborators
+                </button>
+                <button id="tab-owners" class="-success -prefix">
+                    <span class="prefix">for</span>Owners
+                </button>
+            </div>
+
+            <div id="tab-contents">
+                <div id="collaborators">
+                    <ol>
+                        <li>issueページへ</li>
+                        <li>useful issuesからimportする</li>
+                    </ol>
+                    <a href="https://github.com/tkhr0/useful-issues/issues">try it</a>
+                </div>
+                <div id="owners">
+                    <ol>
+                        <li>テンプレートを作る</li>
+                        <li>useful issuesで保存する</li>
+                    </ol>
+                    <a href="https://github.com/tkhr0/useful-issues/issues">try it</a>
+                </div>
+            </div>
+
+        </section>
+
+        <section>
+            <h2>feture</h2>
+
+            <div grid>
+
+                <div column>
+                    <div class="card-box">
+                        <div class="card-content">
+                            <h3 class="title">gallery</h3>
+                            <p class="content">we share the templates</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div column>
+                    <div class="card-box">
+                        <div class="card-content">
+                            <h3 class="title">テンプレートファイル</h3>
+                            <p class="content">ソースの中にテンプレートファイルを入れるとそれを認識する</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div column>
+                    <div class="card-box">
+                        <div class="card-content">
+                            <h3 class="title">tagに対応</h3>
+                            <p class="content">tagもテンプレートとして保存する</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="assets/js/index.js"></script>
     </body>
 </html>

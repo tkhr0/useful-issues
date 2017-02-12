@@ -1,0 +1,18 @@
+@import "node_modules/concise.css/concise";
+@import "node_modules/concise-ui/concise-ui";
+
+.panel-radios {
+    display: none;
+}
+
+#tabs label {
+    display: inline-block;
+}
+
+#tab-contents > * {
+    display: none;
+}
+
+#collaborators {
+    display: block;
+}
