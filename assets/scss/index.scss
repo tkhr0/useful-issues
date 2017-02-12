@@ -1,6 +1,74 @@
 @import "node_modules/concise.css/concise";
 @import "node_modules/concise-ui/concise-ui";
 
+$bg-color: #D9D727;
+$header-height: 60px;
+
+body {
+    text-align: center;
+}
+
+section {
+    margin-top: 50px;
+}
+
+h2 {
+    color: $bg-color;
+}
+
+header {
+    background-color: $bg-color;
+    height: $header-height;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    .brand {
+        text-align: left;
+        display: inline-block;
+        width: 45%;
+    }
+
+    .right {
+        text-align: right;
+        display: inline-block;
+        width: 45%;
+    }
+}
+
+.container {
+    margin-top: $header-height;
+}
+
+.image-gif {
+    margin: 5px 0;
+}
+
+.theme {
+    height: 170px;
+    padding-top: 50px;
+    background-color: $bg-color;
+    .brand {
+        margin-bottom: 10px;
+    }
+}
+
+h1 {
+    display: inline;
+}
+
+.brand {
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    bottom: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
 .panel-radios {
     display: none;
 }
