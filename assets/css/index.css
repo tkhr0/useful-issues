@@ -1250,7 +1250,8 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0; }
+  right: 0;
+  display: none; }
   header .brand {
     text-align: left;
     display: inline-block;
@@ -1260,21 +1261,24 @@ header {
     display: inline-block;
     width: 45%; }
 
-.container {
-  margin-top: 60px; }
-
 .image-gif {
-  margin: 5px 0; }
+  margin: 5px 0;
+  padding-top: 10px; }
+
+.catch {
+  height: 75vh;
+  background-color: #D9D727; }
 
 .theme {
-  height: 170px;
-  padding-top: 50px;
+  height: 20vh;
   background-color: #D9D727; }
   .theme .brand {
     margin-bottom: 10px; }
 
 h1 {
-  display: inline; }
+  display: inline;
+  font-size: 47.775px;
+  font-size: 2.98598rem; }
 
 .brand {
   position: relative; }

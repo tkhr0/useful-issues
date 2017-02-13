@@ -23,6 +23,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
+    display: none;
 
     .brand {
         text-align: left;
@@ -37,17 +38,18 @@ header {
     }
 }
 
-.container {
-    margin-top: $header-height;
-}
-
 .image-gif {
     margin: 5px 0;
+    padding-top: 10px;
+}
+
+.catch {
+    height: 75vh;
+    background-color: $bg-color;
 }
 
 .theme {
-    height: 170px;
-    padding-top: 50px;
+    height: 20vh;
     background-color: $bg-color;
     .brand {
         margin-bottom: 10px;
@@ -56,6 +58,7 @@ header {
 
 h1 {
     display: inline;
+    font-size: typeScale(8);
 }
 
 .brand {
