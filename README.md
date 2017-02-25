@@ -22,6 +22,7 @@ and more!: [tkhr0.github.io/useful-issues](https://tkhr0.github.io/useful-issues
 
 ```
 $ npm install
+$ bower install
 $ gulp watch
 ```
 
