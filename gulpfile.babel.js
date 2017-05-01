@@ -54,7 +54,14 @@ gulp.task('images', () => {
     })))
     .pipe(gulp.dest('dist/images'));
 });
-gulp.task('styles', () => {
+
+// for develop
+gulp.task('font-awesome', () => {
+  return gulp.src('app/bower_components/font-awesome/fonts/*')
+    .pipe(gulp.dest('app/fonts'));
+});
+
+gulp.task('styles', ['font-awesome'], () => {
   return gulp.src('app/styles.scss/*.scss')
     .pipe($.plumber())
     .pipe($.sass.sync({
