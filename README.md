@@ -5,6 +5,7 @@ This is a Chrome extention.
 It enables you to memorize and reuse template for github issue.
 
 ![weekly downloads](https://img.shields.io/chrome-web-store/d/ndjffnpnjoipcpbpfkgengipennjbblh.svg)
+[![CircleCI](https://circleci.com/gh/tkhr0/useful-issues/tree/develop.svg?style=svg)](https://circleci.com/gh/tkhr0/useful-issues/tree/develop)
 
 ## Extension usage
 
