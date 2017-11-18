@@ -114,6 +114,14 @@
      * popupを描画する
      */
     paint() {
+      this._paintTemplate();
+      this._paintRepositoryTemplate();
+    }
+
+    /*
+     *  テンプレートを描画する
+     */
+    _paintTemplate() {
       var self = this;
       chrome.runtime.getBackgroundPage((backgroundPage) => {
         let bg = backgroundPage.bg;
@@ -155,6 +163,55 @@
           this.onClickTitleLink.call(element, evt);
         });
       });
+    }
+
+    /*
+     * リポジトリのテンプレートを表示する
+     */
+    _paintRepositoryTemplate() {
+      chrome.runtime.getBackgroundPage((backgroundPage) => {
+        const bg = backgroundPage.bg;
+
+        // popupを出しているタブを取得する
+        // chrome.tabs.getCurrent === extension's popup
+        chrome.tabs.query({
+          active: true,
+          'windowId': chrome.windows.WINDOW_ID_CURRENT
+        }, (tabs) => {
+          var tab = tabs[0];
+          var url = tab.url;
+          var m, owner, repo;
+          if (m = url.match(new RegExp('github\.com/(.+)/(.+)/compare/.+'))) {
+            owner = m[1];
+            repo = m[2];
+
+          } else if (m = url.match(new RegExp('github\.com/(.+)/(.+)/issues/new.*'))) {
+            owner = m[1];
+            repo = m[2];
+          }
+
+          if (owner && repo) {
+            bg.getRepositoryTemplates(owner, repo, (templates) => {
+              var divList = document.getElementById('list');
+              var divTemplate;
+
+              Object.keys(templates).forEach(function (key) {
+                var template = templates[key];
+
+                divTemplate = document.getElementById('template').cloneNode(true);
+                divTemplate.getElementsByClassName('name')[0].innerHTML = template.name;
+                divTemplate.id = '';
+                divTemplate.setAttribute('data-id', template.id);
+                divTemplate.addEventListener('click', function (evt) {
+                  self.onClickTitleLink.call(this, evt);
+                });
+
+                divList.appendChild(divTemplate);
+              });
+            })
+          }
+        })
+      })
     }
   }
 
