@@ -57,7 +57,8 @@
   },
   "dependencies": {
     "dotenv": "^4.0.0",
-    "gulp-replace": "^0.5.4"
+    "gulp-replace": "^0.5.4",
+    "jssha": "^2.3.1"
   },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register test/spec"
