@@ -18,12 +18,7 @@ class Background {
     * テンプレートをIDを指定してストレージから取得する
     */
     getTemplateById(templateId, callback) {
-      chrome.storage.local.get('template', (item) => {
-        var templates = item.template;
-        if (callback && templates.hasOwnProperty(templateId)) {
-          callback(templates[templateId]);
-        }
-      });
+      this.storage.getOriginal(templateId, callback)
     }
 
   /*

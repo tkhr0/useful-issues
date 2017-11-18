@@ -67,6 +67,23 @@ import Storage from '../../app/scripts.babel/modules/storage.js'
 
     })
 
+    it('get template by type and id', function () {
+      const answer = {'template_id': {title: 'title', body: 'body'}}
+      const storage = new Storage()
+
+      const stubFetch = sinon.stub()
+      stubFetch.callsFake(function(cb) {
+        cb({'ORIGINAL': {'template_id': {title: 'title', body: 'body'}}})
+      })
+      storage._fetch = stubFetch
+
+      const spyMustCall = sinon.spy()
+
+      storage._getTemplate('ORIGINAL', 'template_id', spyMustCall)
+
+      expect(spyMustCall).has.been.calledWith({title: 'title', body: 'body'})
+    })
+
     it('get all templates per type', function () {
       const answer = {
         'template_id_1': {title: 'title_1', body: 'body_1'},

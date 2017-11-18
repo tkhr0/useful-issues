@@ -15,6 +15,24 @@ export default class Storage {
   // templateId: want to get template's id
   //
   getOriginal (templateId, callback) {
+    this._getTemplate('ORIGINAL', templateId, callback)
+  }
+
+  //
+  // get all templates
+  //
+  // callback: callback(item)
+  //
+  getAll (callback) {
+    this._fetch((templatePerType) => {
+      let templates = {}
+
+      for (let key in templatePerType) {
+        templates = Object.assign(templates, templatePerType[key])
+      }
+
+      callback(templates)
+    })
   }
 
   //
@@ -23,8 +41,14 @@ export default class Storage {
   //
   // type: template was defined type
   // templateId: want to get template's id
-  _getTemplate (type, templateId) {
+  _getTemplate (type, templateId, callback) {
+    this._fetch((items) => {
+      const templates = items[type]
 
+      if (callback && templates && templates.hasOwnProperty(templateId)) {
+        callback(templates[templateId])
+      }
+    })
   }
 
   //
