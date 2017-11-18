@@ -5,13 +5,7 @@ import Storage from 'modules/storage.js'
 class Background {
 
   constructor() {
-    this.nextDataId = 0;
-    this.assignEventHandlers();
-    this._initTemplateId();
     this.storage = new Storage()
-  }
-
-  assignEventHandlers() {
   }
 
   /*
@@ -47,30 +41,6 @@ class Background {
         callback(isDeleted);
       });
     }
-
-  /*
-    * テンプレートの次のIDを初期化する
-    */
-    _initTemplateId() {
-      self = this;
-      this.getAllTemplates((templates) => {
-        Object.keys(templates).forEach((val, idx, arr) => {
-          if (val.id > self.nextDataId) {
-            self.nextDataId = val.id + 1;
-          }
-        });
-      });
-    }
-
-  /*
-    * テンプレートの次のIDを取得する
-    */
-    _getNextId() {
-      var nextid = this.nextDataId;
-      this.nextDataId += 1;
-      return nextid;
-    }
-
 }
 
 (function() {

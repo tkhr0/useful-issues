@@ -97,17 +97,6 @@ import Storage from '../../app/scripts.babel/modules/storage.js'
       expect(spyMustCall).has.been.calledWith({title: 'title', body: 'body'})
     })
 
-    it('get all templates per type', function () {
-      const answer = {
-        'template_id_1': {title: 'title_1', body: 'body_1'},
-        'template_id_2': {title: 'title_2', body: 'body_2'}
-      }
-      const storage = new Storage()
-
-      const res = storage._getAllByType('ORIGINAL')
-      expect(res).to.deep.equal(answer)
-    })
-
     it('generate template id', function () {
       const storage = new Storage()
 
