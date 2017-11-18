@@ -161,5 +161,37 @@ import Storage from '../../app/scripts.babel/modules/storage.js'
 
       expect(stubSave).to.have.been.calledWith(answer)
     })
+
+    it('save new template which new type', function () {
+      const now = (new Date).getTime()
+      const saved = {}
+      const target = {id: 'new_template', title: 'title'}
+      const answer = {
+        'ORIGINAL': {
+          'new_template': {id: 'new_template', title: 'title', created_at: now}
+        }
+      }
+
+      const storage = new Storage()
+
+      const stubFetch = sinon.stub()
+      stubFetch.callsFake(function(cb) { cb(saved) })
+      storage._fetch = stubFetch
+
+      const stubCreateTemplateId = sinon.stub()
+      stubCreateTemplateId.onCall(0).returns('new_template')
+      storage._createTemplateId = stubCreateTemplateId
+
+      const stubSave = sinon.stub()
+      storage._save = stubSave
+
+      const stubNow = sinon.stub()
+      stubNow.onCall(0).returns(now)
+      storage._now = stubNow
+
+      storage._saveTemplate('ORIGINAL', target)
+
+      expect(stubSave).to.have.been.calledWith(answer)
+    })
   })
 })();

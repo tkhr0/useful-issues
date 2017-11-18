@@ -91,6 +91,10 @@ export default class Storage {
     template.created_at = this._now()
 
     this._fetch((fullyTemplates) => {
+      if (!fullyTemplates.hasOwnProperty(type)) {
+        fullyTemplates[type] = {}
+      }
+
       fullyTemplates[type][template.id] = template
       this._save(fullyTemplates, callback)
     })
@@ -117,7 +121,6 @@ export default class Storage {
     this._fetch((fullyTemplates) => {
       const isDeleted = delete fullyTemplates[type][templateId]
       this._save(fullyTemplates, () => {
-        console.log(isDeleted)
         callback(isDeleted)
       })
     })
@@ -143,8 +146,10 @@ export default class Storage {
   // callback: callback on success or failure
   //
   _save(fullyTemplates, callback) {
-    const key = this.STORAGE_KEY_TEMPLATE
-    chrome.storage.sync.set({key: fullyTemplates}, callback)
+    const data = {}
+    data[this.STORAGE_KEY_TEMPLATE] = fullyTemplates
+
+    chrome.storage.local.set(data, callback)
   }
 
   //
@@ -153,6 +158,12 @@ export default class Storage {
   // callback: Callback with storage items, or on failure
   //           callback(Object items)
   _fetch(callback) {
-    chrome.storage.sync.get(this.STORAGE_KEY_TEMPLATE, callback)
+    chrome.storage.local.get(this.STORAGE_KEY_TEMPLATE, (root) => {
+      if (root && root[this.STORAGE_KEY_TEMPLATE]) {
+        callback(root[this.STORAGE_KEY_TEMPLATE])
+      } else {
+        callback({})
+      }
+    })
   }
 }
