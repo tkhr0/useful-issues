@@ -107,16 +107,14 @@ gulp.task('chromeManifest', () => {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('babel', () => {
+gulp.task('webpack', () => {
   const scriptPath = path.join(__dirname, 'app/scripts.babel/')
 
   let entry = {}
   entry['analytics'] = path.join(scriptPath, 'analytics.js')
-  entry['apply'] = path.join(scriptPath, 'apply.js')
   entry['background'] = path.join(scriptPath, 'background.js')
   entry['chromereload'] = path.join(scriptPath, 'chromereload.js')
   entry['contentscript'] = path.join(scriptPath, 'contentscript.js')
-  entry['fetch'] = path.join(scriptPath, 'fetch.js')
   entry['options'] = path.join(scriptPath, 'options.js')
   entry['popup'] = path.join(scriptPath, 'popup.js')
 
@@ -137,9 +135,18 @@ gulp.task('babel', () => {
     .pipe(gulp.dest('app/scripts'));
 });
 
+gulp.task('babel', () => {
+  return gulp.src('app/scripts.babel/raw/**/*.js')
+    .pipe($.replace('ANALYTICS_CODE', process.env.ANALYTICS_CODE))
+    .pipe($.babel({
+      presets: ['es2015']
+    }))
+    .pipe(gulp.dest('app/scripts'));
+})
+
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'babel', 'html'], () => {
+gulp.task('watch', ['lint', 'babel', 'webpack', 'html'], () => {
   $.livereload.listen();
 
   gulp.watch([
@@ -150,7 +157,7 @@ gulp.task('watch', ['lint', 'babel', 'html'], () => {
     'app/_locales/**/*.json'
   ]).on('change', $.livereload.reload);
 
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
+  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel', 'webpack']);
   gulp.watch('app/styles.scss/**/*.scss', ['styles']);
   gulp.watch('bower.json', ['wiredep']);
 });
@@ -176,7 +183,9 @@ gulp.task('package', function () {
 
 gulp.task('build', (cb) => {
   runSequence(
-    'lint', 'babel', 'chromeManifest',
+    'lint',
+    ['babel', 'webpack'],
+    'chromeManifest',
     ['html', 'images', 'extras'],
     'size', cb);
 });
