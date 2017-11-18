@@ -33,13 +33,7 @@ class Background {
     * テンプレートをID指定で削除する
     */
     deleteTemplate(templateId, callback) {
-      this.getAllTemplates((templates) => {
-        var isDeleted = delete templates[templateId];
-        if (isDeleted) {
-          chrome.storage.local.set({template: templates});
-        }
-        callback(isDeleted);
-      });
+      this.storage.deleteOriginal(templateId, callback)
     }
 }
 

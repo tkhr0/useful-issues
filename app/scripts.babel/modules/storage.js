@@ -97,6 +97,33 @@ export default class Storage {
   }
 
   //
+  // delete template by id
+  //
+  // templateId: want to delete template id
+  // callback: callback(boolean isDeleted)
+  //
+  deleteOriginal (templateId, callback) {
+    this._delete('ORIGINAL', templateId, callback)
+  }
+
+  //
+  // delete the template
+  //
+  // type: it was defined template type
+  // templateId: want to delete template id
+  // callback: callback(boolean isDeleted)
+  //
+  _delete (type, templateId, callback) {
+    this._fetch((fullyTemplates) => {
+      const isDeleted = delete fullyTemplates[type][templateId]
+      this._save(fullyTemplates, () => {
+        console.log(isDeleted)
+        callback(isDeleted)
+      })
+    })
+  }
+
+  //
   // generate unique id for saving templates
   //
   _createTemplateId(seed) {

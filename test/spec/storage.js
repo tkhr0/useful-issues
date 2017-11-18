@@ -67,7 +67,30 @@ import Storage from '../../app/scripts.babel/modules/storage.js'
     })
 
     it('function delete template by id', function () {
+      const saved = {
+        'ORIGINAL': {'template_id':  {id: 'template_id', title: 'title'}}
+      }
+      const answer = {
+        'ORIGINAL': {}
+      }
+
       const storage = new Storage();
+
+
+      const stubFetch = sinon.stub()
+      stubFetch.callsFake(function(cb) { cb(saved) })
+      storage._fetch = stubFetch
+
+      const stubSave = sinon.stub()
+      stubSave.callsFake(function (_, cb) { cb() })
+      storage._save = stubSave
+
+      const spyMustCall = sinon.spy()
+
+      storage.deleteOriginal('template_id', spyMustCall)
+
+      expect(spyMustCall).to.have.been.calledWith(true)
+      expect(stubSave).to.have.been.calledWith(answer)
     })
 
   });
