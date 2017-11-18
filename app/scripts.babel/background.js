@@ -1,11 +1,14 @@
 'use strict';
 
+import Storage from 'modules/storage.js'
+
 class Background {
 
   constructor() {
     this.nextDataId = 0;
     this.assignEventHandlers();
     this._initTemplateId();
+    this.storage = new Storage()
   }
 
   assignEventHandlers() {
