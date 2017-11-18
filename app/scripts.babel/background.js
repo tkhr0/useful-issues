@@ -32,17 +32,7 @@ class Background {
     * テンプレートを保存する
     */
     saveTemplate(name, title, body) {
-      var id = this._getNextId();
-      var data = {
-        id: id,
-        name: name,
-        title: title,
-        body: body
-      };
-      this.getAllTemplates((templates) => {
-        templates[id] = data;
-        chrome.storage.local.set({template: templates});
-      });
+      this.storage.saveOriginal(name, title, body)
     }
 
   /*

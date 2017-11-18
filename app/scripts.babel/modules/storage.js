@@ -1,12 +1,25 @@
 'use strict';
 
+import JsSha from 'jssha'
+
 export default class Storage {
 
   //
   // it use storage root
   //
-  static get STORAGE_KEY_TEMPLATE () {
+  get STORAGE_KEY_TEMPLATE () {
     return 'template'
+  }
+
+  //
+  get model () {
+    return {
+      id: null,
+      name: null,
+      title: null,
+      body: null,
+      created_at: null,
+    }
   }
 
   //
@@ -57,7 +70,14 @@ export default class Storage {
   // title: template title
   // body: template body
   //
-  saveOriginal (title, body) {
+  saveOriginal (name, title, body, callback) {
+    const template = Object.assign(this.model, {
+      name: name,
+      title: title,
+      body: body
+    })
+
+    this._saveTemplate('ORIGINAL', template, callback)
   }
 
   //
@@ -66,13 +86,27 @@ export default class Storage {
   //
   // type: template was defined type
   // template: template data
-  _saveTemplate(type, template) {
+  _saveTemplate(type, template, callback) {
+    template.id = this._createTemplateId(template.name + template.title + template.body)
+    template.created_at = this._now()
+
+    this._fetch((fullyTemplates) => {
+      fullyTemplates[type][template.id] = template
+      this._save(fullyTemplates, callback)
+    })
   }
 
   //
   // generate unique id for saving templates
   //
   _createTemplateId(seed) {
+    const jssha = new JsSha('SHA-1', 'TEXT')
+    jssha.update(seed)
+    return jssha.getHash('HEX')
+  }
+
+  _now() {
+    return (new Date).getTime()
   }
 
   //

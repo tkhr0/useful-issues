@@ -55,17 +55,15 @@ import Storage from '../../app/scripts.babel/modules/storage.js'
     })
 
     it('function save original template', function () {
-      const answer = {'template_id': {title: 'title', body: 'body'}}
+      const answer = {id: null, name: 'name', title: 'title', body: 'body', created_at: null}
+
       const storage = new Storage();
 
-      const getTemplateId = sinon.stub()
-      getTemplateId.onCall(0).returns('template_id')
-      storage._getTemplateId = getTemplateId
+      const stubSaveTemplate = sinon.stub()
+      storage._saveTemplate = stubSaveTemplate
 
-      const spySaveTemplate = sinon.spy(storage, '_saveTemplate')
-
-      const res = storage.saveOriginal('title', 'body')
-      expect(spySaveTemplate).to.have.been.calledWith('ORIGINAL', answer)
+      const res = storage.saveOriginal('name', 'title', 'body')
+      expect(stubSaveTemplate).to.have.been.calledWith('ORIGINAL', answer)
     })
 
     it('function delete template by id', function () {
@@ -113,8 +111,43 @@ import Storage from '../../app/scripts.babel/modules/storage.js'
     it('generate template id', function () {
       const storage = new Storage()
 
-      const res = storage._getTemplateId('title + body')
+      const res = storage._createTemplateId('title + body')
       expect(res).to.be.a('string')
+    })
+
+    it('save new template which already have type', function () {
+      const now = (new Date).getTime()
+      const saved = {
+        'ORIGINAL': {'template_id':  {id: 'template_id', title: 'title'}}
+      }
+      const target = {id: 'new_template', title: 'title'}
+      const answer = {
+        'ORIGINAL': {
+          'template_id':  {id: 'template_id', title: 'title'},
+          'new_template': {id: 'new_template', title: 'title', created_at: now}
+        }
+      }
+
+      const storage = new Storage()
+
+      const stubFetch = sinon.stub()
+      stubFetch.callsFake(function(cb) { cb(saved) })
+      storage._fetch = stubFetch
+
+      const stubCreateTemplateId = sinon.stub()
+      stubCreateTemplateId.onCall(0).returns('new_template')
+      storage._createTemplateId = stubCreateTemplateId
+
+      const stubSave = sinon.stub()
+      storage._save = stubSave
+
+      const stubNow = sinon.stub()
+      stubNow.onCall(0).returns(now)
+      storage._now = stubNow
+
+      storage._saveTemplate('ORIGINAL', target)
+
+      expect(stubSave).to.have.been.calledWith(answer)
     })
   })
 })();
