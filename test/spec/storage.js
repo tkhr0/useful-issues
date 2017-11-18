@@ -27,16 +27,31 @@ import Storage from '../../app/scripts.babel/modules/storage.js'
     });
 
     it('function get all templates', function () {
-      // const answer = {
-      //   'ORIGINAL': {
-      //     'template_id1': {title: 'title1', body: 'body1'},
-      //     'template_id2': {title: 'title2', body: 'body2'},
-      //   }
-      // }
-      // const storage = new Storage();
-      //
-      // const res = storage.getAll()
-      // expect(res).to.deep.equal(answer)
+      const saved = {
+        'ORIGINAL': {
+          'template_id_1': {title: 'title_1', body: 'body_1'},
+        },
+        'REPOSITORY': {
+          'template_id_2': {title: 'title_2', body: 'body_2'},
+        }
+      }
+      const answer = {
+        'template_id_1': {title: 'title_1', body: 'body_1'},
+        'template_id_2': {title: 'title_2', body: 'body_2'},
+      }
+
+      const storage = new Storage();
+
+      const stubFetch = sinon.stub()
+      stubFetch.callsFake(function(cb) {
+        cb(saved)
+      })
+      storage._fetch = stubFetch
+
+      const spyMustCall = sinon.spy()
+      
+      storage.getAll(spyMustCall)
+      expect(spyMustCall).has.been.calledWith(answer)
     })
 
     it('function save original template', function () {

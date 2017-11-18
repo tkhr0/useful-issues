@@ -25,13 +25,7 @@ class Background {
     * テンプレートをストレージから全取得する
     */
     getAllTemplates(callback) {
-      chrome.storage.local.get('template', (items) => {
-        if ("template" in items) {
-          callback(items.template);
-        } else {
-          callback({});
-        }
-      });
+      this.storage.getAll(callback)
     }
 
   /*
