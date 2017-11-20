@@ -5,10 +5,24 @@ import JsSha from 'jssha'
 export default class Storage {
 
   //
+  // strage version
+  //
+  get STORAGE_KEY_STORAGE_VERSION () {
+    return 'storage_version'
+  }
+
+  //
   // it use storage root
   //
   get STORAGE_KEY_TEMPLATE () {
     return 'template'
+  }
+
+  //
+  // strage version
+  //
+  get STORAGE_VERSION () {
+    return '1.0.0'
   }
 
   //
