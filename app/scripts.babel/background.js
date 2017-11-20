@@ -1,10 +1,12 @@
 'use strict';
 
 import Storage from 'modules/storage.js'
+import StorageMigration from 'modules/storage_migration.js'
 
 class Background {
 
   constructor() {
+    (new StorageMigration()).convert()
     this.storage = new Storage()
   }
 
