@@ -10,12 +10,14 @@ export default class StorageMigration {
   //
   // check storage version and convert storage structure
   //
-  convert () {
+  // callback: callback at converted
+  //
+  convert (callback) {
     this.storage.get(null, (data) => {
 
       // at first version
       if (!data.hasOwnProperty(this.storage.STORAGE_KEY_STORAGE_VERSION)) {
-        this._migrate(null)
+        this._migrate(null, callback)
         return
       }
 
@@ -23,26 +25,42 @@ export default class StorageMigration {
 
       // latest version
       if (storageVersion === this.storage.STORAGE_VERSION) {
+        if (callback) {
+          callback()
+        }
         return
       }
 
       // older version
-      this._migrate(storageVersion)
+      this._migrate(storageVersion, callback)
     })
   }
 
   //
   // migrate storage structure
   //
-  _migrate (currentVersion) {
+  // callback: callback in migrated
+  //
+  _migrate (currentVersion, callback) {
     switch (currentVersion) {
       case null:
-        this._migrateNullTo1_0_0()
+        this._migrateNullTo1_0_0(callback)
+        return
+    }
+
+    if (callback) {
+      callback()
     }
   }
 
   //
   // migrate first version to 1.0.0
+  //
+  // callback: callback in migrated
+  //
+  // How to migration
+  // 1. save old model templates in new model
+  // 2. delete old model templates
   //
   // VERSION first
   // {template: {
@@ -65,14 +83,14 @@ export default class StorageMigration {
   //     }
   //   }
   // }}
-  _migrateNullTo1_0_0 () {
+  _migrateNullTo1_0_0 (callback) {
 
     (new Promise((resolve, reject) => {
-      // save old model templates in new model
       this.storage.get(null, (data) => {
         resolve(data)
       })
     })).then((data) => {
+      // 1. save old model templates in new model
 
       let oldIds = Object.keys(data.template)
       let i
@@ -108,7 +126,7 @@ export default class StorageMigration {
         })
 
       }).then(() => {
-        // delete old model templates
+        // 2. delete old model templates
         new Promise((resolve) => {
           this.storage.get(this.storage.STORAGE_KEY_TEMPLATE, (root) => {
             const templates = root[this.storage.STORAGE_KEY_TEMPLATE]

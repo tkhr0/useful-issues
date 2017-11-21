@@ -52,13 +52,14 @@ import MockStorage from '../mock/mock_storage.js'
       stubNow.returns(now)
       storageMigration.storage._now = stubNow
 
-      storageMigration.convert()
       new Promise((resolve) => {
-        storageMigration.storage.get(null, (data) => {
-          resolve(data)
+        storageMigration.convert(() => {
+          resolve()
         })
-      }).then((data) => {
-        expect(data).to.deep.equal(answer)
+      }).then(() => {
+        storageMigration.storage.get(null, (data) => {
+          expect(data).to.deep.equal(answer)
+        })
       })
     })
   })
