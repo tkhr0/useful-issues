@@ -110,22 +110,22 @@ export default class StorageMigration {
       }).then(() => {
         // delete old model templates
         new Promise((resolve) => {
-          this.storage.get(this.storage.STORAGE_KEY_TEMPLATE, (templates) => {
+          this.storage.get(this.storage.STORAGE_KEY_TEMPLATE, (root) => {
+            const templates = root[this.storage.STORAGE_KEY_TEMPLATE]
             for (let templateId in templates) {
               let intId = parseInt(templateId)
               if ((!isNaN(intId)) && (typeof intId === 'number')) {
                 delete templates[templateId]
               }
             }
-            resolve()
+            resolve(templates)
           })
 
-        }).then(() => {
-          this.storage.get(null, (data) => {
-            data[this.storage.STORAGE_KEY_STORAGE_VERSION]
-              = this.storage.STORAGE_VERSION
-            this.storage.set(data)
-          })
+        }).then((templates) => {
+          data[this.storage.STORAGE_KEY_TEMPLATE] = templates
+          data[this.storage.STORAGE_KEY_STORAGE_VERSION]
+            = this.storage.STORAGE_VERSION
+          this.storage.set(data, callback)
         })
       })
     })
