@@ -15,6 +15,14 @@ export default class StorageMigration {
   convert (callback) {
     this.storage.get(null, (data) => {
 
+      // in first time
+      if (Object.keys(data).length == 0) {
+        if (callback) {
+          callback()
+        }
+        return
+      }
+
       // at first version
       if (!data.hasOwnProperty(this.storage.STORAGE_KEY_STORAGE_VERSION)) {
         this._migrate(null, callback)
