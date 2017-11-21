@@ -38,10 +38,12 @@ import MockStorage from '../mock/mock_storage.js'
       storageMigration.storage.get = storage.get
       storageMigration.storage.set = storage.set
 
-      storageMigration.storage.set({template: {
-        1: {id: 1, name: 'name 1', title: 'title 1', body: 'body 1'},
-        2: {id: 2, name: 'name 2', title: 'title 2', body: 'body 2'},
-      }})
+      storageMigration.storage.set({
+        template: {
+          '1': {id: 1, name: 'name 1', title: 'title 1', body: 'body 1'},
+          '2': {id: 2, name: 'name 2', title: 'title 2', body: 'body 2'},
+        }
+      })
 
       const stubCreateTemplateId = sinon.stub()
       stubCreateTemplateId.onCall(0).returns('template_1')
