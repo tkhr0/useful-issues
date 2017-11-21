@@ -1,10 +1,12 @@
 // generated on 2016-08-26 using generator-chrome-extension 0.6.0
+import path from 'path'
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import del from 'del';
 import runSequence from 'run-sequence';
 import {stream as wiredep} from 'wiredep';
 import dotenv from 'dotenv';
+import webpack from 'webpack-stream';
 
 const $ = gulpLoadPlugins();
 dotenv.config();
@@ -105,18 +107,46 @@ gulp.task('chromeManifest', () => {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('babel', () => {
+gulp.task('webpack', () => {
+  const scriptPath = path.join(__dirname, 'app/scripts.babel/')
+
+  let entry = {}
+  entry['analytics'] = path.join(scriptPath, 'analytics.js')
+  entry['background'] = path.join(scriptPath, 'background.js')
+  entry['chromereload'] = path.join(scriptPath, 'chromereload.js')
+  entry['contentscript'] = path.join(scriptPath, 'contentscript.js')
+  entry['options'] = path.join(scriptPath, 'options.js')
+  entry['popup'] = path.join(scriptPath, 'popup.js')
+
   return gulp.src('app/scripts.babel/**/*.js')
-      .pipe($.replace('ANALYTICS_CODE', process.env.ANALYTICS_CODE))
-      .pipe($.babel({
-        presets: ['es2015']
-      }))
-      .pipe(gulp.dest('app/scripts'));
+    .pipe($.replace('ANALYTICS_CODE', process.env.ANALYTICS_CODE))
+    .pipe(webpack({
+      resolve: {
+        modules: ['node_modules', 'app/scripts.babel'],
+      },
+      entry: entry,
+      output: {
+        filename: '[name].js'
+      }
+    }))
+    .pipe($.babel({
+      presets: ['es2015']
+    }))
+    .pipe(gulp.dest('app/scripts'));
 });
+
+gulp.task('babel', () => {
+  return gulp.src('app/scripts.babel/raw/**/*.js')
+    .pipe($.replace('ANALYTICS_CODE', process.env.ANALYTICS_CODE))
+    .pipe($.babel({
+      presets: ['es2015']
+    }))
+    .pipe(gulp.dest('app/scripts'));
+})
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'babel', 'html'], () => {
+gulp.task('watch', ['lint', 'babel', 'webpack', 'html'], () => {
   $.livereload.listen();
 
   gulp.watch([
@@ -127,7 +157,7 @@ gulp.task('watch', ['lint', 'babel', 'html'], () => {
     'app/_locales/**/*.json'
   ]).on('change', $.livereload.reload);
 
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
+  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel', 'webpack']);
   gulp.watch('app/styles.scss/**/*.scss', ['styles']);
   gulp.watch('bower.json', ['wiredep']);
 });
@@ -147,13 +177,15 @@ gulp.task('wiredep', () => {
 gulp.task('package', function () {
   var manifest = require('./dist/manifest.json');
   return gulp.src('dist/**')
-      .pipe($.zip('useful-issues-' + manifest.version + '.zip'))
-      .pipe(gulp.dest('package'));
+    .pipe($.zip('useful-issues-' + manifest.version + '.zip'))
+    .pipe(gulp.dest('package'));
 });
 
 gulp.task('build', (cb) => {
   runSequence(
-    'lint', 'babel', 'chromeManifest',
+    'lint',
+    ['babel', 'webpack'],
+    'chromeManifest',
     ['html', 'images', 'extras'],
     'size', cb);
 });

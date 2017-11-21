@@ -1,96 +1,42 @@
 'use strict';
 
-(function() {
-  class Background {
+import Storage from 'modules/storage.js'
 
-    constructor() {
-      this.nextDataId = 0;
-      this.assignEventHandlers();
-      this._initTemplateId();
-    }
+class Background {
 
-    assignEventHandlers() {
-    }
-
-    /*
-     * テンプレートをIDを指定してストレージから取得する
-     */
-    getTemplateById(templateId, callback) {
-      chrome.storage.local.get('template', (item) => {
-        var templates = item.template;
-        if (callback && templates.hasOwnProperty(templateId)) {
-          callback(templates[templateId]);
-        }
-      });
-    }
-
-    /*
-     * テンプレートをストレージから全取得する
-     */
-    getAllTemplates(callback) {
-      chrome.storage.local.get('template', (items) => {
-        if ("template" in items) {
-          callback(items.template);
-        } else {
-          callback({});
-        }
-      });
-    }
-
-    /*
-     * テンプレートを保存する
-     */
-    saveTemplate(name, title, body) {
-      var id = this._getNextId();
-      var data = {
-        id: id,
-        name: name,
-        title: title,
-        body: body
-      };
-      this.getAllTemplates((templates) => {
-        templates[id] = data;
-        chrome.storage.local.set({template: templates});
-      });
-    }
-
-    /*
-     * テンプレートをID指定で削除する
-     */
-    deleteTemplate(templateId, callback) {
-      this.getAllTemplates((templates) => {
-        var isDeleted = delete templates[templateId];
-        if (isDeleted) {
-          chrome.storage.local.set({template: templates});
-        }
-        callback(isDeleted);
-      });
-    }
-
-    /*
-     * テンプレートの次のIDを初期化する
-     */
-    _initTemplateId() {
-      self = this;
-      this.getAllTemplates((templates) => {
-        Object.keys(templates).forEach((val, idx, arr) => {
-          if (val.id > self.nextDataId) {
-            self.nextDataId = val.id + 1;
-          }
-        });
-      });
-    }
-
-    /*
-     * テンプレートの次のIDを取得する
-     */
-    _getNextId() {
-      var nextid = this.nextDataId;
-      this.nextDataId += 1;
-      return nextid;
-    }
-
+  constructor() {
+    this.storage = new Storage()
   }
 
+  /*
+    * テンプレートをIDを指定してストレージから取得する
+    */
+    getTemplateById(templateId, callback) {
+      this.storage.getOriginal(templateId, callback)
+    }
+
+  /*
+    * テンプレートをストレージから全取得する
+    */
+    getAllTemplates(callback) {
+      this.storage.getAll(callback)
+    }
+
+  /*
+    * テンプレートを保存する
+    */
+    saveTemplate(name, title, body) {
+      this.storage.saveOriginal(name, title, body)
+    }
+
+  /*
+    * テンプレートをID指定で削除する
+    */
+    deleteTemplate(templateId, callback) {
+      this.storage.deleteOriginal(templateId, callback)
+    }
+}
+
+(function() {
   window.bg = new Background();
 })();
