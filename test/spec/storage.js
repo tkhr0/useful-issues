@@ -43,9 +43,7 @@ import Storage from '../../app/scripts.babel/modules/storage.js'
       const storage = new Storage();
 
       const stubFetch = sinon.stub()
-      stubFetch.callsFake(function(cb) {
-        cb(saved)
-      })
+      stubFetch.callsFake(function(cb) { cb(saved) })
       storage._fetch = stubFetch
 
       const spyMustCall = sinon.spy()
@@ -130,7 +128,9 @@ import Storage from '../../app/scripts.babel/modules/storage.js'
     it('save new template which already have type', function () {
       const now = (new Date).getTime()
       const saved = {
-        'ORIGINAL': {'template_id':  {id: 'template_id', title: 'title'}}
+        'ORIGINAL': {
+          'template_id':  {id: 'template_id', title: 'title'}
+        }
       }
       const target = {id: 'new_template', title: 'title'}
       const answer = {

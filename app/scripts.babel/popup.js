@@ -62,7 +62,7 @@
       chrome.tabs.executeScript(null, {
         file: 'scripts/fetch.js'
       }, (results) => {
-        if (results && results.hasOwnProperty(0)) {
+        if (results && (0 < results.length)) {
           var data = results[0];
           chrome.runtime.getBackgroundPage((backgroundPage) => {
             let bg = backgroundPage.bg;

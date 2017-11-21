@@ -5,10 +5,24 @@ import JsSha from 'jssha'
 export default class Storage {
 
   //
+  // strage version
+  //
+  get STORAGE_KEY_STORAGE_VERSION () {
+    return 'storage_version'
+  }
+
+  //
   // it use storage root
   //
   get STORAGE_KEY_TEMPLATE () {
     return 'template'
+  }
+
+  //
+  // strage version
+  //
+  get STORAGE_VERSION () {
+    return '1.0.0'
   }
 
   //
@@ -144,12 +158,13 @@ export default class Storage {
   //
   // fullyTemplates: replaced this data
   // callback: callback on success or failure
+  //           callback()
   //
   _save(fullyTemplates, callback) {
     const data = {}
     data[this.STORAGE_KEY_TEMPLATE] = fullyTemplates
 
-    chrome.storage.local.set(data, callback)
+    this.set(data, callback)
   }
 
   //
@@ -158,12 +173,36 @@ export default class Storage {
   // callback: Callback with storage items, or on failure
   //           callback(Object items)
   _fetch(callback) {
-    chrome.storage.local.get(this.STORAGE_KEY_TEMPLATE, (root) => {
-      if (root && root[this.STORAGE_KEY_TEMPLATE]) {
+    this.get(this.STORAGE_KEY_TEMPLATE, (root) => {
+      if (root
+        && (typeof root == 'object')
+        && root.hasOwnProperty(this.STORAGE_KEY_TEMPLATE)
+      ) {
+        // callback({'ORIGINAL': {[Object]}, {'HOGE': {[Object]}}})
         callback(root[this.STORAGE_KEY_TEMPLATE])
       } else {
         callback({})
       }
     })
+  }
+
+  //
+  // get chrome storage
+  //
+  // key: pick up key. get all key-values if key is null
+  // callback: callback(picked_up_object)
+  //
+  get (key, callback) {
+    chrome.storage.local.get(key, callback)
+  }
+
+  //
+  // set chrome storage
+  //
+  // data: will be set data
+  // callback: call always. callback()
+  //
+  set (data, callback) {
+    chrome.storage.local.set(data, callback)
   }
 }
