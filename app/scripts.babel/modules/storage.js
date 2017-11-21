@@ -174,8 +174,12 @@ export default class Storage {
   //           callback(Object items)
   _fetch(callback) {
     this.get(this.STORAGE_KEY_TEMPLATE, (root) => {
-      if (root) {
-        callback(root)
+      if (root
+        && (typeof root == 'object')
+        && root.hasOwnProperty(this.STORAGE_KEY_TEMPLATE)
+      ) {
+        // callback({'ORIGINAL': {[Object]}, {'HOGE': {[Object]}}})
+        callback(root[this.STORAGE_KEY_TEMPLATE])
       } else {
         callback({})
       }
