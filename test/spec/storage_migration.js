@@ -15,7 +15,7 @@ import MockStorage from '../mock/mock_storage.js'
 
   describe('StorageMigration public methods test', function () {
 
-    it('migrate version none to 1.0.0', function () {
+    it('migrate version none to 1.0.0', function (done) {
       const now = (new Date).getTime()
       const answer = {
         template: {
@@ -59,9 +59,12 @@ import MockStorage from '../mock/mock_storage.js'
           resolve()
         })
       }).then(() => {
-        storageMigration.storage.get(null, (data) => {
-          expect(data).to.deep.equal(answer)
-        })
+        new Promise((resolve) => {
+          storageMigration.storage.get(null, (data) => {
+            expect(data).to.deep.equal(answer)
+            resolve()
+          })
+        }).then(done, done)
       })
     })
   })
