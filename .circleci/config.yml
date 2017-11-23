@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:6.10
+    environment:
+      - APP_ID: ndjffnpnjoipcpbpfkgengipennjbblh
+  
+    steps:
+      - checkout
+
+      - run:
+          name: "Install Dependencies"
+          command: |
+            sudo apt-get -y install jq
+            yarn install
+            yarn bower install
+  
+      - run:
+          name: "Run Tests"
+          command: yarn test
+  
+      - run:
+          name: "Package Extension"
+          command: |
+            yarn gulp build
+            cd dist
+            zip -Dr useful-issues.zip .
+            mv -v useful-issues.zip ../
