@@ -22,7 +22,9 @@ export default class MockStorage extends Storage {
     if (key === null) {
       callback(this.data)
     } else if (this.data.hasOwnProperty(key)) {
-      callback(this.data[key])
+      const data = {}
+      data[key] = this.data[key]
+      callback(data)
     } else {
       this.lastError = 'not found key'
       callback()
