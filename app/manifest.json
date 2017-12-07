@@ -1,10 +1,10 @@
 {
   "name": "__MSG_appName__",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "manifest_version": 2,
   "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
   "description": "__MSG_appDescription__",
-  "web_accessible_resources": ["*.otf", "*.ttf"],
+  "web_accessible_resources": ["*.otf", "*.ttf", "*.woff", "*.woff2"],
   "icons": {
     "16": "images/icon-16.png",
     "128": "images/icon-128.png"
